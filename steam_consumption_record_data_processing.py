@@ -1,4 +1,5 @@
 import re
+import datetime
 from bs4 import BeautifulSoup
 
 soup = BeautifulSoup(open('./tmp/record.html'), 'html.parser')
@@ -17,13 +18,14 @@ for wallet_table_row in wallet_table_rows:
     wht_num = re.search(r'(.*)¥ (.*)', list(wht_total)[0]).groups()
     if not tp or tp[0][0] != '+':
         account = float(wht_num[1])
-        date = list(wht_date)[0]
+        date = datetime.datetime.strptime(list(wht_date)[0], '%Y年%m月%d日')
         if date in res:
             res[date] += account
         else:
             res[date] = account
-key_lst = sorted(res.keys())
-val_lst = [int(res[key]*100)/100.0 for key in key_lst]
+key_tmp_lst = sorted(res.keys())
+key_lst = [date.strftime('%Y-%m-%d') for date in key_tmp_lst]
+val_lst = [int(res[key]*100)/100.0 for key in key_tmp_lst]
 print(key_lst)
 print(val_lst)
 # accounts.append(account)
