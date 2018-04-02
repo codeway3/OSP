@@ -26,7 +26,9 @@ for wallet_table_row in wallet_table_rows:
 key_tmp_lst = sorted(res.keys())
 key_lst = [date.strftime('%Y-%m-%d') for date in key_tmp_lst]
 val_lst = [int(res[key]*100)/100.0 for key in key_tmp_lst]
-print(key_lst)
-print(val_lst)
+sum_lst = [int(sum(val_lst[:num+1])*100)/100.0 for num in range(len(val_lst))]
+# print(key_lst)
+# print(val_lst)
+# print(sum_lst)
 # accounts.append(account)
 # dates.append(list(wht_date)[0])
