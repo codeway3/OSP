@@ -1,4 +1,4 @@
-cal_rules = {
+calculation_rules = {
     'kills': 0.3,
     'deaths': -0.3,
     'assists': 0.15,
