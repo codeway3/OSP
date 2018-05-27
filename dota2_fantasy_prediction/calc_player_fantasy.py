@@ -1,8 +1,8 @@
-from json_load import json_load
+from utils import json_load
 from calculation_rules import calculation_rules as cal
 
 
-def player_fantasy_calc(init_dict=None):
+def calc_player_fantasy(init_dict=None):
     if not init_dict:
         init_dict = json_load('player')
     keys = ['kills', 'deaths', 'assists', 'last_hits', 'gold_per_min', 'tower_kills', 'roshan_kills', 'teamfight_participation', 'observer_uses', 'camps_stacked', 'rune_pickups', 'firstblood_claimed', 'stuns']
@@ -17,6 +17,6 @@ def player_fantasy_calc(init_dict=None):
     return fin_dict
 
 
-if __name__ == "__main__":
-    ans = player_fantasy_calc()
+if __name__ == '__main__':
+    ans = calc_player_fantasy()
     print(ans)
