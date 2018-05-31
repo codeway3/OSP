@@ -6,7 +6,7 @@ def calc_match_fantasy(match_id: int=None):
     if not match_id:
         init_dict = json_load(3870838763)
     else:
-        init_dict = get_match_json(match_id)
+        _, init_dict = get_match_json(match_id)
     fin_dict = {}
     fin_dict['radiant_team'] = init_dict['radiant_team']
     fin_dict['dire_team'] = init_dict['dire_team']

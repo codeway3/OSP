@@ -9,18 +9,28 @@ def json_load(param=None):
     return ret
 
 
-def get_match_json(match_id: int):
+def get_match_json(match_id: int, show_log=True):
+    db_has_data = True
     ans = posts.find_one({'match_id': match_id})
     if not ans:
-        ans = fetch_match_json(match_id)
+        db_has_data = False
+        ans = fetch_match_json(match_id, show_log)
         posts.insert_one(ans)
-    return ans
+    return db_has_data, ans
 
 
-def fetch_match_json(match_id: int):
+def fetch_match_json(match_id: int, show_log=True):
     model = 'https://api.opendota.com/api/matches/{}'
     url = model.format(match_id)
-    print("FETCHING: {}".format(url))
+    if show_log:
+        print("FETCHING: {}".format(url))
+    response = requests.get(url)
+    if response.status_code == requests.codes.ok:
+        return response.json()
+
+
+def fetch_league_json(id, url):
+    print("FETCHING LEAGUE {}".format(id))
     response = requests.get(url)
     if response.status_code == requests.codes.ok:
         return response.json()
