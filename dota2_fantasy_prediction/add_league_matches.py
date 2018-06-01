@@ -25,20 +25,25 @@ def add_league_matches(league_id, have_progress=False):
     total = init_dict['rowCount']
     rows = init_dict['rows']
     print('matches count: {}'.format(total))
-    for row in rows:
-        num += 1
-        match_id = row['match_id']
-        db_has_data, _ = get_match_json(match_id, show_log=False)
-        if not db_has_data:
-            time.sleep(1)
-        if have_progress:
-            progress(num, total)
+    try:
+        for row in rows:
+            num += 1
+            match_id = row['match_id']
+            db_has_data, _ = get_match_json(match_id, show_log=False)
+            if not db_has_data:
+                time.sleep(1.2)
+            if have_progress:
+                progress(num, total)
+    except Exception as e:
+        print(e)
+        print("Exception occurred and rerun.")
+        add_league_matches(league_id, have_progress)
 
 
 @click.command()
-@click.option('--id', default=9880, help='ID of league.')
-def cli(id):
-    add_league_matches(id, have_progress=True)
+@click.option('--lid', default=9880, help='ID of league.')
+def cli(lid):
+    add_league_matches(league_id=lid, have_progress=True)
 
 
 if __name__ == '__main__':
