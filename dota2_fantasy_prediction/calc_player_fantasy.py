@@ -1,5 +1,5 @@
-from utils import json_load
-from calculation_rules import calculation_rules as cal
+from ..utils import json_load
+from .calculation_rules import calculation_rules as cal
 
 
 def calc_player_fantasy(init_dict=None):

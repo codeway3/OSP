@@ -1,5 +1,5 @@
-from utils import get_match_json, json_load
-from calc_player_fantasy import calc_player_fantasy
+from ..utils import get_match_json, json_load
+from .calc_player_fantasy import calc_player_fantasy
 
 
 def calc_match_fantasy(match_id: int=None):
