@@ -7,7 +7,7 @@ from OSP.steam_consumption import render_consumption_vis
 
 
 @click.command()
-@click.option('--func', default='consumption')
+@click.option('--func', default='heatmap')
 @click.option('--param', default=None)
 def cli(func, param):
     if func == 'add league':

@@ -1,1 +1,1 @@
-from .render_consumption_vis import render_consumption_vis
+from .render_consumption_vis import page, render_consumption_vis
