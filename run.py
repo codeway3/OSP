@@ -1,14 +1,23 @@
 import sys
 from flask import Flask, render_template
 sys.path.append('..')
-from steam_consumption import page as consumption_page
-from dota2_heatmap import page as heatmap_page
+from OSP.dota2_fantasy import calc_match_fantasy
+from OSP.dota2_heatmap import page as heatmap_page
+from OSP.steam_consumption import page as consumption_page
 
 REMOTE_HOST = 'https://pyecharts.github.io/assets/js'
 
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+
+@app.route('/fantasy/')
+def fantasy():
+    return render_template(
+        'fantasy.html',
+        fantasy_dict=calc_match_fantasy(3870838763),
+    )
 
 
 @app.route('/consumption/')

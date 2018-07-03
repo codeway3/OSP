@@ -1,6 +1,11 @@
 import json
 import requests
-from .db_utils import posts
+from pymongo import MongoClient
+
+
+client = MongoClient()
+db = client['matches']
+posts = db.posts
 
 
 def json_load(param=None):

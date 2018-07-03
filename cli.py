@@ -7,15 +7,15 @@ from OSP.steam_consumption import render_consumption_vis
 
 
 @click.command()
-@click.option('--func', default='heatmap')
+@click.option('--func', default='heatmap', help='add league/fantasy/heatmap/consumption')
 @click.option('--param', default=None)
 def cli(func, param):
     if func == 'add league':
         add_league_matches(league_id=param, have_progress=True)
-    elif func == 'calc match':
-        print(calc_match_fantasy())
+    elif func == 'fantasy':
+        print(calc_match_fantasy(match_id=param))
     elif func == 'heatmap':
-        render_heatmap(param)
+        render_heatmap(player_id=param)
     elif func == 'consumption':
         render_consumption_vis()
 

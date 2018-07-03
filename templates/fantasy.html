@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fantasy Display</title>
+</head>
+
+<body>
+    <p>天辉 {{ fantasy_dict['radiant_team']['name'] }}</p>
+    <table border="1">
+        <tr>
+            <td>玩家</td>
+            <td>梦幻积分</td>
+            <td>击杀</td>
+            <td>死亡</td>
+            <td>正补</td>
+            <td>GPM</td>
+            <td>防御塔</td>
+            <td>肉山</td>
+            <td>参战</td>
+            <td>假眼</td>
+            <td>屯野</td>
+            <td>神符</td>
+            <td>第一滴血</td>
+            <td>控制时间</td>
+        </tr>
+        {% for player_dict in fantasy_dict['players'][:5] %}
+        <tr>
+            <td>{{ player_dict['name'] }}</td>
+            <td>{{ player_dict['sum'] }}</td>
+            <td>{{ player_dict['kills'] }}</td>
+            <td>{{ player_dict['deaths'] }}</td>
+            <td>{{ player_dict['last_hits'] }}</td>
+            <td>{{ player_dict['gold_per_min'] }}</td>
+            <td>{{ player_dict['tower_kills'] }}</td>
+            <td>{{ player_dict['roshan_kills'] }}</td>
+            <td>{{ player_dict['teamfight_participation'] }}</td>
+            <td>{{ player_dict['observer_uses'] }}</td>
+            <td>{{ player_dict['camps_stacked'] }}</td>
+            <td>{{ player_dict['rune_pickups'] }}</td>
+            <td>{{ player_dict['firstblood_claimed'] }}</td>
+            <td>{{ player_dict['stuns'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>夜魇 {{ fantasy_dict['dire_team']['name'] }}</p>
+    <table border="1">
+        <tr>
+            <td>玩家</td>
+            <td>梦幻积分</td>
+            <td>击杀</td>
+            <td>死亡</td>
+            <td>正补</td>
+            <td>GPM</td>
+            <td>防御塔</td>
+            <td>肉山</td>
+            <td>参战</td>
+            <td>假眼</td>
+            <td>屯野</td>
+            <td>神符</td>
+            <td>第一滴血</td>
+            <td>控制时间</td>
+        </tr>
+        {% for player_dict in fantasy_dict['players'][5:] %}
+        <tr>
+            <td>{{ player_dict['name'] }}</td>
+            <td>{{ player_dict['sum'] }}</td>
+            <td>{{ player_dict['kills'] }}</td>
+            <td>{{ player_dict['deaths'] }}</td>
+            <td>{{ player_dict['last_hits'] }}</td>
+            <td>{{ player_dict['gold_per_min'] }}</td>
+            <td>{{ player_dict['tower_kills'] }}</td>
+            <td>{{ player_dict['roshan_kills'] }}</td>
+            <td>{{ player_dict['teamfight_participation'] }}</td>
+            <td>{{ player_dict['observer_uses'] }}</td>
+            <td>{{ player_dict['camps_stacked'] }}</td>
+            <td>{{ player_dict['rune_pickups'] }}</td>
+            <td>{{ player_dict['firstblood_claimed'] }}</td>
+            <td>{{ player_dict['stuns'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
