@@ -1,13 +1,14 @@
 from datetime import datetime
 from pyecharts import HeatMap, Page
-from OSP.utils import json_load, fetch_player_matches_json
+from OSP.utils import fetch_player_matches_json
 
 
-def render_heatmap(player_id: int=None):
+def page(player_id: int=None):
+    # init_list = json_load('matches')
     if not player_id:
-        init_list = json_load('matches')
-    else:
         init_list = fetch_player_matches_json(129689355)
+    else:
+        init_list = fetch_player_matches_json(player_id)
     # print(len(init_list))
     init_dict = {}
     data = []
@@ -40,4 +41,9 @@ def render_heatmap(player_id: int=None):
     page = Page()
     page.add(heatmap1)
     page.add(heatmap2)
-    page.render(path='./tmp/heatmap.html')
+    return page
+
+
+def render_heatmap(player_id: int=None):
+    _page = page(player_id)
+    _page.render(path='./tmp/heatmap.html')

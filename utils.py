@@ -1,6 +1,11 @@
 import json
 import requests
-from .db_utils import posts
+from pymongo import MongoClient
+
+
+client = MongoClient()
+db = client['matches']
+posts = db.posts
 
 
 def json_load(param=None):
@@ -12,6 +17,8 @@ def json_load(param=None):
 def fetch_json(url, show_log=True):
     if show_log:
         print("FETCHING: {}".format(url))
+    header = {}
+    header['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36'
     response = requests.get(url)
     if response.status_code == requests.codes.ok:
         return response.json()

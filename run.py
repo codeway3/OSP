@@ -1,21 +1,51 @@
 import sys
-import click
+from flask import Flask, render_template
 sys.path.append('..')
-from OSP.dota2_fantasy_prediction import add_league_matches, calc_match_fantasy
-from OSP.dota2_heatmap import render_heatmap
+from OSP.dota2_fantasy import calc_match_fantasy
+from OSP.dota2_heatmap import page as heatmap_page
+from OSP.steam_consumption import page as consumption_page
+
+REMOTE_HOST = 'https://pyecharts.github.io/assets/js'
 
 
-@click.command()
-@click.option('--func', default='add league')
-@click.option('--param', default=9880)
-def cli(func, param):
-    if func == 'add league':
-        add_league_matches(league_id=param, have_progress=True)
-    elif func == 'calc match':
-        print(calc_match_fantasy())
-    elif func == 'heatmap':
-        render_heatmap(1)
+app = Flask(__name__)
+app.config.from_object('config')
+
+
+@app.route('/fantasy/')
+def fantasy():
+    return render_template(
+        'fantasy.html',
+        fantasy_dict=calc_match_fantasy(3870838763),
+    )
+
+
+@app.route('/consumption/')
+def consumption():
+    _page = consumption_page()
+    return render_template(
+        'pyecharts.html',
+        myechart=_page.render_embed(),
+        host=REMOTE_HOST,
+        script_list=_page.get_js_dependencies(),
+    )
+
+
+@app.route('/heatmap/')
+def heatmap():
+    _page = heatmap_page()
+    return render_template(
+        'pyecharts.html',
+        myechart=_page.render_embed(),
+        host=REMOTE_HOST,
+        script_list=_page.get_js_dependencies(),
+    )
+
+
+@app.route('/')
+def index():
+    return 'hello world'
 
 
 if __name__ == '__main__':
-    cli()
+    app.run(host='0.0.0.0', port=9000)

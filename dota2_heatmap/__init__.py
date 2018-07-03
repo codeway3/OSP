@@ -1,1 +1,1 @@
-from .render_heatmap import render_heatmap
+from .render_heatmap import page, render_heatmap
