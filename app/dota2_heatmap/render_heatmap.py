@@ -1,6 +1,6 @@
 from datetime import datetime
 from pyecharts import HeatMap, Page
-from OSP.utils import fetch_player_matches_json
+from ..utils import fetch_player_matches_json
 
 
 def page(player_id: int=None):
