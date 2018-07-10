@@ -1,7 +1,10 @@
 import json
 import requests
 from pymongo import MongoClient
+from . import app
 
+
+logger = app.logger
 
 client = MongoClient()
 db = client['matches']
@@ -16,10 +19,15 @@ def json_load(param=None):
 
 def fetch_json(url, show_log=True):
     if show_log:
-        print("FETCHING: {}".format(url))
+        logger.debug("FETCHING: {}".format(url))
     header = {}
     header['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36'
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+        logger.debug(response)
+    except:
+        logger.error()
+        exit()
     if response.status_code == requests.codes.ok:
         return response.json()
 
@@ -40,8 +48,8 @@ def fetch_match_json(match_id: int):
     return fetch_json(url)
 
 
-def fetch_league_json(league_id, url):
-    print("FETCHING LEAGUE {}".format(league_id))
+def fetch_league_json(league_id: int, url: str):
+    logger.debug("FETCHING LEAGUE {}".format(league_id))
     return fetch_json(url, show_log=False)
 
 
