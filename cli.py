@@ -1,9 +1,7 @@
-import sys
 import click
-sys.path.append('..')
-from OSP.dota2_fantasy import add_league_matches, calc_match_fantasy
-from OSP.dota2_heatmap import render_heatmap
-from OSP.steam_consumption import render_consumption_vis
+from app.dota2_fantasy import add_league_matches, calc_match_fantasy
+from app.dota2_heatmap import render_heatmap
+from app.steam_consumption import render_consumption_vis
 
 
 @click.command()

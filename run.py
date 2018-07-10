@@ -1,51 +1,16 @@
-import sys
-from flask import Flask, render_template
-sys.path.append('..')
-from OSP.dota2_fantasy import calc_match_fantasy
-from OSP.dota2_heatmap import page as heatmap_page
-from OSP.steam_consumption import page as consumption_page
-
-REMOTE_HOST = 'https://pyecharts.github.io/assets/js'
-
-
-app = Flask(__name__)
-app.config.from_object('config')
-
-
-@app.route('/fantasy/')
-def fantasy():
-    return render_template(
-        'fantasy.html',
-        fantasy_dict=calc_match_fantasy(3870838763),
-    )
-
-
-@app.route('/consumption/')
-def consumption():
-    _page = consumption_page()
-    return render_template(
-        'pyecharts.html',
-        myechart=_page.render_embed(),
-        host=REMOTE_HOST,
-        script_list=_page.get_js_dependencies(),
-    )
-
-
-@app.route('/heatmap/')
-def heatmap():
-    _page = heatmap_page()
-    return render_template(
-        'pyecharts.html',
-        myechart=_page.render_embed(),
-        host=REMOTE_HOST,
-        script_list=_page.get_js_dependencies(),
-    )
-
-
-@app.route('/')
-def index():
-    return 'hello world'
-
+import logging
+from logging.handlers import RotatingFileHandler
+from flask.logging import default_handler
+from app import app
 
 if __name__ == '__main__':
+    handler = RotatingFileHandler(filename='./log/app.log', maxBytes=1048576, backupCount=3)
+    formatter = logging.Formatter(fmt='%(asctime)s - %(name)s[line:%(lineno)d] - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    handler.setFormatter(formatter)
+    handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(handler)
+
+    default_handler.setLevel(logging.INFO)
+    app.logger.addHandler(default_handler)
+
     app.run(host='0.0.0.0', port=9000)
