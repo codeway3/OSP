@@ -25,8 +25,8 @@ def fetch_json(url: str, show_log: bool=True):
     try:
         response = requests.get(url)
         logger.debug(response)
-    except:
-        logger.error()
+    except Exception as e:
+        logger.error(e)
         exit()
     if response.status_code == requests.codes.ok:
         return response.json()

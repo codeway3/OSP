@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">    
+    <link rel="shortcut icon" href="{{ url_for('static', filename='dota.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="nav">
+        <ul>  
+            <li><a href="{{ url_for('index') }}">主页</a></li>
+            <li><a href="{{ url_for('fantasy') }}">梦幻积分</a></li>
+            <li><a href="{{ url_for('heatmap') }}">热力图</a></li>
+            <li><a href="{{ url_for('consumption') }}">消费统计</a></li>
+            <li style="float:right">
+                <a href="https://github.com/codeway3/OSP"><img src="{{ url_for('static', filename='github.png') }}">GitHub</a>
+            </li>
+        </ul>
+    </div>
+    <div class="backimg">    
+        <img src="{{ url_for('static', filename='background.jpg') }}">
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>
