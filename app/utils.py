@@ -11,13 +11,13 @@ db = client['matches']
 posts = db.posts
 
 
-def json_load(param=None):
+def json_load(param: str=None):
     with open('./tmp/{}.json'.format(param), 'r') as load_f:
         ret = json.load(load_f)
     return ret
 
 
-def fetch_json(url, show_log=True):
+def fetch_json(url: str, show_log: bool=True):
     if show_log:
         logger.debug("FETCHING: {}".format(url))
     header = {}
