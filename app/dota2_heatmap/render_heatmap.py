@@ -1,14 +1,14 @@
 from datetime import datetime
 from pyecharts import HeatMap, Page
-from ..utils import fetch_player_matches_json
+from ..utils import get_player_matches_json
 
 
 def page(player_id: int=None):
     # init_list = json_load('matches')
     if not player_id:
-        init_list = fetch_player_matches_json(129689355)
+        init_list = get_player_matches_json(129689355)
     else:
-        init_list = fetch_player_matches_json(player_id)
+        init_list = get_player_matches_json(player_id)
     # print(len(init_list))
     init_dict = {}
     data = []
