@@ -1,3 +1,4 @@
+import time
 import json
 import requests
 from pymongo import MongoClient
@@ -9,15 +10,18 @@ logger = app.logger
 client = MongoClient()
 db = client['matches']
 posts = db.posts
+heatmap = client['heatmap'].posts
+
+timeout = 86400
 
 
-def json_load(param=None):
+def json_load(param: str=None):
     with open('./tmp/{}.json'.format(param), 'r') as load_f:
         ret = json.load(load_f)
     return ret
 
 
-def fetch_json(url, show_log=True):
+def fetch_json(url: str, show_log: bool=True):
     if show_log:
         logger.debug("FETCHING: {}".format(url))
     header = {}
@@ -25,21 +29,24 @@ def fetch_json(url, show_log=True):
     try:
         response = requests.get(url)
         logger.debug(response)
-    except:
-        logger.error()
+    except Exception as e:
+        logger.error(e)
         exit()
     if response.status_code == requests.codes.ok:
         return response.json()
 
 
 def get_match_json(match_id: int):
-    db_has_data = True
-    ans = posts.find_one({'match_id': match_id})
-    if not ans:
-        db_has_data = False
-        ans = fetch_match_json(match_id, )
-        posts.insert_one(ans)
-    return db_has_data, ans
+    try:
+        db_has_data = True
+        ans = posts.find_one({'match_id': match_id})
+        if not ans:
+            db_has_data = False
+            ans = fetch_match_json(match_id)
+            posts.insert_one(ans)
+        return db_has_data, ans
+    except Exception:
+        logger.error('MongoDB error!')
 
 
 def fetch_match_json(match_id: int):
@@ -51,6 +58,21 @@ def fetch_match_json(match_id: int):
 def fetch_league_json(league_id: int, url: str):
     logger.debug("FETCHING LEAGUE {}".format(league_id))
     return fetch_json(url, show_log=False)
+
+
+def get_player_matches_json(player_id: int):
+    now_ticks = time.time()
+    try:
+        ans = heatmap.find_one({'player_id': player_id})
+        if not ans or now_ticks - ans['ticks'] > timeout:
+            ans = {}
+            ans['player_id'] = player_id
+            ans['ticks'] = now_ticks
+            ans['json'] = fetch_player_matches_json(player_id)
+            heatmap.insert_one(ans)
+        return ans['json']
+    except Exception:
+        logger.error('MongoDB error!')
 
 
 def fetch_player_matches_json(player_id: int):

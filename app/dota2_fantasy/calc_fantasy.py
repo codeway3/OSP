@@ -35,7 +35,7 @@ def calc_player_fantasy(init_dict: dict=None):
 
 def calc_match_fantasy(match_id: int=None):
     if not match_id:
-        init_dict = json_load(3870838763)
+        _, init_dict = get_match_json(3870838763)
     else:
         _, init_dict = get_match_json(match_id)
     fin_dict = {}

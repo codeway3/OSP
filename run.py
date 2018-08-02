@@ -10,6 +10,17 @@ if __name__ == '__main__':
     handler.setLevel(logging.DEBUG)
     app.logger.addHandler(handler)
 
+    """ # flask.logging.create_logger
+    logger = logging.getLogger('flask.app')
+
+    if app.debug and logger.level == logging.NOTSET:
+        logger.setLevel(logging.DEBUG)
+
+    if not has_level_handler(logger):
+        logger.addHandler(default_handler)
+
+    return logger
+    """
     default_handler.setLevel(logging.INFO)
     app.logger.addHandler(default_handler)
 

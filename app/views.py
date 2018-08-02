@@ -8,10 +8,11 @@ REMOTE_HOST = 'https://pyecharts.github.io/assets/js'
 
 
 @app.route('/fantasy/')
-def fantasy():
+@app.route('/fantasy/<int:match_id>')
+def fantasy(match_id=None):
     return render_template(
         'fantasy.html',
-        fantasy_dict=calc_match_fantasy(3870838763),
+        fantasy_dict=calc_match_fantasy(match_id),
     )
 
 
@@ -27,8 +28,9 @@ def consumption():
 
 
 @app.route('/heatmap/')
-def heatmap():
-    _page = heatmap_page()
+@app.route('/heatmap/<int:player_id>')
+def heatmap(player_id=None):
+    _page = heatmap_page(player_id)
     return render_template(
         'pyecharts.html',
         myechart=_page.render_embed(),
@@ -39,4 +41,6 @@ def heatmap():
 
 @app.route('/')
 def index():
-    return 'hello world'
+    return render_template(
+        'index.html',
+    )
