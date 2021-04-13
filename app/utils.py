@@ -97,8 +97,9 @@ def get_match_json(match_id: int):
             info = ans['dire_team']
             team_upsert(db=teams, info=info)
         return db_has_data, ans
-    except Exception:
+    except Exception as e:
         logger.error('MongoDB error!')
+        logger.debug(e)
 
 
 def fetch_match_json(match_id: int):
@@ -118,8 +119,9 @@ def get_player_matches_json(player_id: int):
             ans['json'] = fetch_player_matches_json(player_id)
             heatmap.insert_one(ans)
         return ans['json']
-    except Exception:
+    except Exception as e:
         logger.error('MongoDB error!')
+        logger.debug(e)
 
 
 def fetch_player_matches_json(player_id: int):

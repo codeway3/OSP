@@ -24,23 +24,18 @@ def page(player_id: int=None):
         tmp = []
         tmp.extend((key, val))
         data.append(tmp)
-    heatmap1 = HeatMap("日历热力图", "2017-2018年每日dota2游戏场数", height=250, width=1100)
-    heatmap1.add("", data, is_calendar_heatmap=True,
-                 visual_text_color='#000', visual_range_text=['', ''],
-                 visual_range=[0, 15], calendar_cell_size=['auto', 20],
-                 is_visualmap=True, calendar_date_range='2017',
-                 visual_orient="horizontal", visual_pos="center",
-                 visual_top="90%", is_piecewise=True)
-    heatmap2 = HeatMap(height=250, width=1100)
-    heatmap2.add("", data, is_calendar_heatmap=True,
-                 visual_text_color='#000', visual_range_text=['', ''],
-                 visual_range=[0, 15], calendar_cell_size=['auto', 20],
-                 is_visualmap=True, calendar_date_range='2018',
-                 visual_orient="horizontal", visual_pos="center",
-                 visual_top="90%", is_piecewise=True)
+
     page = Page()
-    page.add(heatmap1)
-    page.add(heatmap2)
+    year = int(datetime.today().strftime("%Y"))
+    for i in range(year, 2016, -1):
+        heatmap = HeatMap(height=250, width=1100)
+        heatmap.add("", data, is_calendar_heatmap=True,
+                    visual_text_color='#000', visual_range_text=['', ''],
+                    visual_range=[0, 15], calendar_cell_size=['auto', 20],
+                    is_visualmap=True, calendar_date_range=str(i),
+                    visual_orient="horizontal", visual_pos="center",
+                    visual_top="90%", is_piecewise=True)
+        page.add(heatmap)
     return page
 
 
